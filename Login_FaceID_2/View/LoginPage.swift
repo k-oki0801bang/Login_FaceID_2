@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import LocalAuthentication
 
 struct LoginPage: View {
     @StateObject var loginModel: LoginViewModel = LoginViewModel()
@@ -35,7 +36,7 @@ struct LoginPage: View {
                     RoundedRectangle(cornerRadius: 8)
                         .fill(
                         
-                            loginModel.email == "" ? Color.black.opacity(0.05) : Color.orange)
+                            loginModel.email == "" ? Color.black.opacity(0.05) : Color.black.opacity(0.2))
                 }
                 //autocapitalixationの無効化
                 .textInputAutocapitalization(.never)
@@ -48,10 +49,36 @@ struct LoginPage: View {
                     RoundedRectangle(cornerRadius: 8)
                         .fill(
                         
-                            loginModel.password == "" ? Color.black.opacity(0.05) : Color.orange)
+                            loginModel.password == "" ? Color.black.opacity(0.05) : Color.black.opacity(0.2))
                 }
                 .textInputAutocapitalization(.never)
                 .padding(.top, 15)
+            
+            Button {
+                
+            } label: {
+                
+                Text("Login")
+                    .fontWeight(.semibold)
+                    .foregroundColor(Color.white)
+                    .padding()
+                    .hCenter()
+                    .background(
+                        RoundedRectangle(cornerRadius: 8)
+                            .fill(Color(red: 0.65, green: 0, blue: 0.30))
+                    )
+            }
+            .padding(.vertical, 35)
+            .disabled(loginModel.email == "" || loginModel.password == "")
+            .opacity(loginModel.email == "" || loginModel.password == "" ? 0.5 : 1)
+            
+            NavigationLink {
+                
+            } label: {
+                
+                Text("Skip Now")
+                    .foregroundColor(.gray)
+            }
         }
         .padding(.horizontal, 25)
         .padding(.vertical)
