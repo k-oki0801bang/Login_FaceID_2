@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import LocalAuthentication
 import FirebaseAuth
 
 class LoginViewModel: ObservableObject {
@@ -19,21 +20,47 @@ class LoginViewModel: ObservableObject {
     @AppStorage("use_face_password") var faceIDPassword = ""
     
     //Log Status
-    @AppStorage("use_face_id") var logStatus = false
+    @AppStorage("log_status") var logStatus = false
+    
+    //Error
+    @Published var showError = false
+    @Published var errorMsg = ""
     
     //Firebase Login
     //同期処理　async await
-    func loginUser() async throws {
+    func loginUser(useFaceID: Bool, email: String = "", password: String = "") async throws {
         
-        let _ = try await Auth.auth().signIn(withEmail: email, password: password)
+        let _ = try await Auth.auth().signIn(withEmail: email != "" ? email : self.email, password: password != "" ? password : self.password)
         
-        if useFaceID {
+        //非同期処理
+        DispatchQueue.main.async {
             
-            //Storing for future face ID Login
-            faceIDEmail = email
-            faceIDPassword = password
+            if useFaceID && self.faceIDEmail == "" {
+                self.useFaceID = useFaceID
+                //Storing for future face ID Login
+                self.faceIDEmail = self.email
+                self.faceIDPassword = self.password
+            }
+            
+            self.logStatus = true
         }
+    }
+    
+    //FaceID Usage
+    func getBioMetricStatus()->Bool {
+        //生体認証を管理クラスを生成
+        let scanner = LAContext()
         
-        logStatus = true
+        return scanner.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: .none)
+    }
+    
+    //FaceID Login
+    func authenticateUser() async throws {
+        
+        let status = try await LAContext().evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: "To Login Into App")
+        
+        if status {
+            try await loginUser(useFaceID: useFaceID, email: self.faceIDEmail, password: self.faceIDPassword)
+        }
     }
 }

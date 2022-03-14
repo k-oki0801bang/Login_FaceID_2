@@ -18,6 +18,7 @@
 		9F794D3727DDB39700630F7B /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 9F794D3627DDB39700630F7B /* FirebaseAuth */; };
 		9F794D3B27DDBDB600630F7B /* LoginPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F794D3A27DDBDB600630F7B /* LoginPage.swift */; };
 		9F794D3D27DDC19C00630F7B /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F794D3C27DDC19C00630F7B /* LoginViewModel.swift */; };
+		9F794D3F27DF13EA00630F7B /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F794D3E27DF13EA00630F7B /* Home.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,7 @@
 		9F794D3327DD985B00630F7B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		9F794D3A27DDBDB600630F7B /* LoginPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPage.swift; sourceTree = "<group>"; };
 		9F794D3C27DDC19C00630F7B /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		9F794D3E27DF13EA00630F7B /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -142,6 +144,7 @@
 			isa = PBXGroup;
 			children = (
 				9F794D3A27DDBDB600630F7B /* LoginPage.swift */,
+				9F794D3E27DF13EA00630F7B /* Home.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -293,6 +296,7 @@
 			files = (
 				9F794D3D27DDC19C00630F7B /* LoginViewModel.swift in Sources */,
 				9F794D0C27DCCED300630F7B /* ContentView.swift in Sources */,
+				9F794D3F27DF13EA00630F7B /* Home.swift in Sources */,
 				9F794D3B27DDBDB600630F7B /* LoginPage.swift in Sources */,
 				9F794D0A27DCCED300630F7B /* Login_FaceID_2App.swift in Sources */,
 			);
@@ -458,6 +462,7 @@
 				DEVELOPMENT_TEAM = 3BQ9ZGULC5;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -487,6 +492,7 @@
 				DEVELOPMENT_TEAM = 3BQ9ZGULC5;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

@@ -10,6 +10,7 @@ import LocalAuthentication
 
 struct LoginPage: View {
     @StateObject var loginModel: LoginViewModel = LoginViewModel()
+    @State var useFaceID = false
     var body: some View {
         
         VStack {
@@ -42,7 +43,8 @@ struct LoginPage: View {
                 .textInputAutocapitalization(.never)
                 .padding(.top, 20)
             
-            TextField("password", text: $loginModel.password)
+            //SecureField(テキストの非表示)
+            SecureField("password", text: $loginModel.password)
                 .padding()
                 .background {
                     
@@ -54,8 +56,64 @@ struct LoginPage: View {
                 .textInputAutocapitalization(.never)
                 .padding(.top, 15)
             
-            Button {
+            if loginModel.getBioMetricStatus() {
                 
+                Group {
+                    if loginModel.useFaceID {
+                        
+                        Button {
+                            //FaceID実行
+                            Task {
+                                do {
+                                    try await loginModel.authenticateUser()
+                                }
+                                catch {
+                                    loginModel.errorMsg = error.localizedDescription
+                                    loginModel.showError.toggle()
+                                }
+                            }
+                        } label: {
+                            
+                            VStack(alignment: .leading, spacing: 10) {
+                                
+                                Label {
+                                    Text("Use FaceID to login into previous account")
+                                } icon: {
+                                    
+                                    Image(systemName: "faceid")
+                                }
+                                .font(.caption)
+                                .foregroundColor(.gray)
+                                
+                                Text("Note: You can turn of it in setting!")
+                                    .font(.caption2)
+                                    .foregroundColor(.gray)
+                            }
+                        }
+                        .hLeading()
+                    }
+                    else {
+                        //Toggleボタン
+                        Toggle(isOn: $useFaceID) {
+                            Text("Use FaceID to Login")
+                                .foregroundColor(.gray)
+                        }
+                    }
+                }
+                .padding(.vertical, 20)
+            }
+            
+            Button {
+                Task {
+                    do {
+                        try await loginModel.loginUser(useFaceID: useFaceID)
+                    }
+                    catch {
+                        loginModel.errorMsg = error.localizedDescription
+                        loginModel.showError.toggle()
+                    }
+                }
+
             } label: {
                 
                 Text("Login")
@@ -82,6 +140,9 @@ struct LoginPage: View {
         }
         .padding(.horizontal, 25)
         .padding(.vertical)
+        .alert(loginModel.errorMsg, isPresented: $loginModel.showError) {
+            
+        }
     }
 }
 
